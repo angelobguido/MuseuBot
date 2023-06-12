@@ -1,0 +1,50 @@
+[{
+    "tipo": "peça",
+    "nome": "Quipus",
+    "ano": "Período pré-colombiano",
+    "descricao": "O Quipus foi um sistema de registro e contagem de dados utilizado pelos Incas no período pré-colombiano. Consistia em cordas de algodão ou lã amarradas em nós de diferentes tamanhos e cores para representar números e informações. O Quipus era utilizado principalmente para fins administrativos e fiscais, como a contagem de tributos e a distribuição de alimentos e outros recursos.",
+    "link": "https://pt.wikipedia.org/wiki/Quipu"
+  },
+  {
+    "tipo": "peça",
+    "nome": "Telejogo",
+    "ano": 1977,
+    "descricao": "O Telejogo foi um dos primeiros videogames domésticos lançados no Brasil em 1977 pela Philco. Ele foi projetado para ser conectado diretamente à televisão e permitia que os usuários jogassem uma variedade de jogos em preto e branco, incluindo tênis, futebol e hóquei. O Telejogo foi um sucesso no Brasil e ajudou a popularizar os videogames no país.",
+    "link": "https://pt.wikipedia.org/wiki/Telejogo"
+  },
+  {
+    "tipo": "peça",
+    "nome": "Expert",
+    "ano": 1985,
+    "descricao": "O Expert foi um microcomputador produzido pela Gradiente Eletrônica no Brasil durante a década de 1980. Ele foi projetado para uso doméstico e apresentava um processador Z80 de 8 bits, 64 KB de memória RAM e usava fitas cassete ou disquetes para armazenamento de dados. O Expert se tornou popular entre os usuários brasileiros de computadores pessoais na década de 1980.",
+    "link": "https://www.museudocomputador.com.br/expert"
+  },
+  {
+    "tipo": "peça",
+    "nome": "Atari",
+    "ano": 1977,
+    "descricao": "O Atari foi um dos primeiros videogames domésticos bem-sucedidos e foi lançado pela primeira vez em 1977 pela Atari Inc. Ele apresentava gráficos coloridos e sons digitais e vinha com dois controles remotos que permitiam que dois jogadores jogassem simultaneamente. O Atari foi um marco importante na história dos videogames e teve um impacto significativo na cultura popular.",
+    "link": "https://www.atari.com/"
+  },
+  {
+    "tipo": "peça",
+    "nome": "TK-85",
+    "ano": 1985,
+    "descricao": "O TK-85 foi um computador pessoal lançado em 1985 pela Microdigital Eletrônica, uma empresa brasileira. Foi um dos primeiros microcomputadores produzidos em massa no Brasil e se tornou popular entre estudantes e entusiastas de tecnologia. O TK-85 apresentava um processador Z80A de 8 bits, 16 KB de memória RAM e usava fitas cassete para armazenamento de dados.",
+    "link": "https://www.museudocomputador.com.br/tk-85"
+  },
+  {
+    "tipo": "peça",
+    "nome": "MC4000",
+    "ano": 1973,
+    "descricao": "O MC4000 era um computador de grande porte fabricado pela Philips Data Systems (PDS) na década de 1970. Ele era projetado para aplicações comerciais e científicas, e apresentava um processador central de 16 bits, memória de núcleo magnético e dispositivos de armazenamento em disco rígido.",
+    "link": "https://www.old-computers.com/museum/computer.asp?c=1496&st=1"
+  },
+  {
+    "tipo": "peça",
+    "nome": "IBM 1403 PRINTER",
+    "ano": 1959,
+    "descricao": "A IBM 1403 Printer era uma impressora de grande porte, usada principalmente em ambientes de mainframe na década de 1960. Era capaz de imprimir a uma velocidade de até 1100 linhas por minuto e usava papel contínuo de 14,875 polegadas de largura.",
+    "link": "https://www-03.ibm.com/ibm/history/exhibits/mainframe/mainframe_PP1403.html"
+  }
+]
