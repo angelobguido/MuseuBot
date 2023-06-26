@@ -34,17 +34,17 @@ def type(input: str):
 def piece_tool(input: str):
     res = piece(input)
 
-    if (res.count == 0):
+    if (len(res) == 0):
         return ""
 
     out = f'''
     
-    Nome: {df.iloc[res[0], "Modelo"]}
-    Ano de Fabricação/Época: {df.iloc[res[0], "Ano de Fabricação/Época"]}
-    Tipo do Objeto: {df.iloc[res[0], "Tipo do Objeto"]}
-    Descrição: {df.iloc[res[0], "Descrição do Objeto"]}
-
-    Peças com nomes semelhantes: {str([df.iloc[res[x], "Modelo"] for x in res[1:]])}
+    Nome: {df.iloc[res[0]]["Modelo"]}
+    Ano de Fabricação/Época: {df.iloc[res[0]]["Ano de Fabricação/Época"]}
+    Tipo do Objeto: {df.iloc[res[0]]["Tipo do Objeto"]}
+    Descrição: {df.iloc[res[0]]["Descrição do Objeto"]}
+    
+    Peças com nomes semelhantes: {str([df.iloc[x]["Modelo"] for x in res])}
     
     '''
 
@@ -59,7 +59,7 @@ def type_tool(input: str):
 
     out = f'''
     
-    Peças do tipo escolhido: {str([df.iloc[res[x], "Modelo"] for x in res[1:]])}
+    Peças do tipo escolhido: {str([df.iloc[x]["Modelo"] for x in res])}
     
     '''
 
