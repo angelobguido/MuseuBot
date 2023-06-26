@@ -64,3 +64,43 @@ def type_tool(input: str):
     '''
 
     return out
+
+#Return museum info
+def museum_info_tool(input: str):
+    
+    out = f'''
+
+    O Museu de Computação do ICMC teve origem como um Museu de Instrumentos de Cálculo Numérico idealizado pelo Prof. Odelar Leite Linhares. 
+    Com o surgimento das minicalculadoras digitais, os antigos instrumentos de cálculo tornaram-se obsoletos, levando à criação do museu. 
+    O acervo recebeu doações de peças e foi instalado na Biblioteca Prof. Achile Bassi. Após a aposentadoria do Prof. Odelar, o museu ficou 
+    sob a coordenação do Departamento de Ciências de Computação e Estatística. O acervo continuou a crescer com doações de computadores e 
+    dispositivos obsoletos. O espaço do museu foi ampliado em 2013 e 2014, visando integrá-lo ao ambiente acadêmico. O novo espaço foi 
+    inaugurado em junho de 2014 com a exposição "Computação e Copa em um só ritmo". 
+    
+    Mais informações estão disponíveis no site do museu: https://mc.icmc.usp.br/exposi%C3%A7%C3%B5es.
+    
+    '''
+
+    return out
+
+#Return assistent info
+def assistant_info_tool(input: str):
+    
+    out = f'''
+    
+    Você é um assistente de museu do ICMC. Você é capaz de realizar diversas operações sobre as peças do museu e sobre o museu em si.
+    Algumas de suas utilidades são:
+    
+    Falar sobre o museu do ICMC. 
+    Desenhar uma peça.
+    Dizer informações sobre uma peça.
+    Dizer nomes de peças próximos a um nome de peça.
+    Mostrar o nome de todas as peças de um tipo específico.
+    Pegar o nome de algumas peças do museu de exemplo.
+
+    OBS: A pergunta pode conter uma composição dessas funções, 
+    mas evite fazer consultas longas visto que existe um limite de iterações.
+
+    '''
+
+    return out

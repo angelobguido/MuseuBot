@@ -4,6 +4,7 @@ import streamlit as st
 import museum_search
 from langchain.agents import AgentType, initialize_agent, Tool, Agent
 from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI
 import langchain.agents.mrkl.base as zero 
 
 os.environ['OPENAI_API_KEY'] = open_ai_key
@@ -33,6 +34,16 @@ def print_image(input: str):
 
 tools = [
     Tool(
+        func=museum_search.assistant_info_tool,
+        name="Info about you",
+        description="útil para dizer que você é e o que é capaz de realizar."
+    ),
+    Tool(
+        func=museum_search.museum_info_tool,
+        name="Museum Info",
+        description="útil para encontrar informações sobre o museu, possui link para informações extras e uma história do museu"
+    ),
+    Tool(
         func=museum_search.piece_tool,
         name="Piece Search",
         description="útil para encontrar informações sobre uma peça do museu, inserir o nome da peça ou modelo"
@@ -49,7 +60,7 @@ tools = [
     )
 ]
 
-agent = initialize_agent(tools, ChatOpenAI(temperature=0.5), agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, max_iterations=2, early_stopping_method="generate")
+agent = initialize_agent(tools, OpenAI(temperature=0.5), agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, max_iterations=5, early_stopping_method="generate")
 
 sys_msg = """Você é um assistente do museu do ICMC, deve responder tudo em portugues sobre o que te perguntarem sobre o museu. Não responda nada além do museu e suas peças . Você tem acesso a essas ferramentas:"""
 
@@ -58,18 +69,21 @@ agent.agent.llm_chain.prompt = prompt
 
 # app framework
 st.title('📚🤖 ChatBot do Museu')
-prompt = st.text_input('Faça sua pergunta aqui sobre o museu e suas peças:')
+prompt = st.text_input('Faça sua pergunta aqui sobre o museu e suas peças:', value="", key="text")
 
 if prompt:
     st.write(agent.run(prompt))
-    #st.write(museum_search.piece_tool(prompt))
+    st.session_state["text"] = ""
 
 else:
     st.write("""
-        Pergunte qualquer coisa para o chat. Ele é capaz de fazer 3 ações: 
+        Pergunte qualquer coisa para o chat. Ele é capaz de fazer as seguintes ações:
+        Falar sobre o museu do ICMC. 
         Desenhar uma peça.
-        Dizer informações sobre ela.
+        Dizer informações sobre uma peça.
+        Dizer nomes de peças próximos a um nome de peça.
         Mostrar o nome de todas as peças de um tipo específico.
+        Pegar o nome de algumas peças do museu de exemplo. -> FAZER
 
         OBS: A pergunta pode conter uma composição dessas funções, 
         mas evite fazer consultas longas visto que existe um limite de duas iterações.
