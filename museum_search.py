@@ -1,5 +1,7 @@
 import pandas
 import requests
+from thefuzz import process, fuzz
+import random
 import jellyfish as jf
 
 df = pandas.read_csv("peças.txt")
@@ -9,30 +11,29 @@ df = df[df["Modelo"].notna()]
 df = df[df["Descrição do Objeto"].notna()]
 df.reset_index(inplace=True)
 
-#Return museum pieces indexes with names similar to input
-def piece(input: str):
-    res = []
-    for index, value in df["Modelo"].items():
-        if jf.levenshtein_distance(input.lower(), str(value).lower()) <= 0.5 * len(input):
-            res.append((jf.levenshtein_distance(input.lower(), str(value).lower()), index))
+LAST_INFO = ''
 
-    res.sort()
+#Return indexes based on similarity with attribute value
+def take_indexes(input: str, attribute: str):
+    res = []
+
+    process.extract(query=input, choices=list(map(lambda x : x[1], df["Modelo"].items())), scorer=fuzz.ratio)
+
+    for index, value in df[attribute].items():
+        res.append((fuzz.ratio(input.lower(), str(value).lower()), index))
+
+    res.sort(reverse=True)
+
+    if res[0][0] < 50:
+        return []
+
     res = list(map(lambda x : x[1], res))
-
-    return res
-
-#Return museum pieces indexes with types similar to input
-def type(input: str):
-    res = []
-    for index, value in df["Tipo do Objeto"].items():
-        if jf.levenshtein_distance(input.lower(), str(value).lower()) <= 0.5 * len(input):
-            res.append(index)
 
     return res
 
 #Return museum piece information to use as an agent tool
 def piece_tool(input: str):
-    res = piece(input)
+    res = take_indexes(input, "Modelo")[:5]
 
     if (len(res) == 0):
         return ""
@@ -48,11 +49,13 @@ def piece_tool(input: str):
     
     '''
 
+    global LAST_INFO
+    LAST_INFO = out
     return out
 
 #Return museum pieces names according to type
 def type_tool(input: str):
-    res = type(input)
+    res = take_indexes(input, "Tipo do Objeto")
 
     if (res.count == 0):
         return ""
@@ -63,6 +66,8 @@ def type_tool(input: str):
     
     '''
 
+    global LAST_INFO
+    LAST_INFO = out
     return out
 
 #Return museum info
@@ -81,6 +86,8 @@ def museum_info_tool(input: str):
     
     '''
 
+    global LAST_INFO
+    LAST_INFO = out
     return out
 
 #Return assistent info
@@ -104,3 +111,10 @@ def assistant_info_tool(input: str):
     '''
 
     return out
+
+#Return random example pieces
+def example_tool(input: str):
+
+    pieces = list(map( lambda x: x[1], random.sample(list(df["Modelo"].items()), 5)))
+
+    return str(pieces)

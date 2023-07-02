@@ -10,13 +10,12 @@ import langchain.agents.mrkl.base as zero
 os.environ['OPENAI_API_KEY'] = open_ai_key
 
 can_print = False
-image_to_print = ''
 
 def print_image(input: str):
     global can_print
     global image_to_print
 
-    res = museum_search.piece(input)
+    res = museum_search.take_indexes(input, "Modelo")
     if len(res) == 0:
         can_print = False
         image_to_print = ''
@@ -41,26 +40,31 @@ tools = [
     Tool(
         func=museum_search.museum_info_tool,
         name="Museum Info",
-        description="útil para encontrar informações sobre o museu, possui link para informações extras e uma história do museu"
+        description="útil para encontrar informações apenas sobre o museu do ICMC, possui link para informações extras e uma história do museu"
     ),
     Tool(
         func=museum_search.piece_tool,
         name="Piece Search",
-        description="útil para encontrar informações sobre uma peça do museu, inserir o nome da peça ou modelo"
+        description="útil para encontrar todas as informações sobre uma peça do museu"
     ),
     Tool(
         func=museum_search.type_tool,
         name="Type Search",
-        description="útil para encontrar todas as peças do museu de um determinado tipo, inserir apenas o tipo"
+        description="útil para encontrar todas as peças do museu de um determinado tipo"
     ),
     Tool(
         func=print_image,
         name="Print Piece",
         description="útil para desenhar uma peça pelo nome dela, pode não desenhar nada"   
+    ),
+    Tool(
+        func=museum_search.example_tool,
+        name="Example pieces",
+        description="util para coletar 5 pecas aleatorias do museu de exemplo"
     )
 ]
 
-agent = initialize_agent(tools, OpenAI(temperature=0.5), agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, max_iterations=5, early_stopping_method="generate")
+agent = initialize_agent(tools, ChatOpenAI(temperature=0.7), agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, max_iterations=2, early_stopping_method="generate", handle_parsing_errors=True)
 
 sys_msg = """Você é um assistente do museu do ICMC, deve responder tudo em portugues sobre o que te perguntarem sobre o museu. Não responda nada além do museu e suas peças . Você tem acesso a essas ferramentas:"""
 
@@ -73,7 +77,7 @@ prompt = st.text_input('Faça sua pergunta aqui sobre o museu e suas peças:', v
 
 if prompt:
     st.write(agent.run(prompt))
-    st.session_state["text"] = ""
+    st.write(museum_search.LAST_INFO)
 
 else:
     st.write("""
@@ -83,7 +87,7 @@ else:
         Dizer informações sobre uma peça.
         Dizer nomes de peças próximos a um nome de peça.
         Mostrar o nome de todas as peças de um tipo específico.
-        Pegar o nome de algumas peças do museu de exemplo. -> FAZER
+        Pegar o nome de algumas peças do museu de exemplo.
 
         OBS: A pergunta pode conter uma composição dessas funções, 
         mas evite fazer consultas longas visto que existe um limite de duas iterações.
@@ -91,3 +95,4 @@ else:
 
 if can_print:
     st.markdown(image_to_print, unsafe_allow_html=True)
+    
